@@ -1,5 +1,5 @@
 import { check } from "express-validator";
-import { validateResults } from "../utils/handleValidator";
+import { validateResults } from "../utils/handleValidator.js";
 
 export const validatorCreateItem =[
     check("name")
@@ -52,5 +52,7 @@ export const validatorCreateItem =[
         .withMessage("Id da mídia é obrigatório")
         .notEmpty()
         .withMessage("Id da mídia não pode ser vazio"),
-    validateResults()
+    (req, res, next) => {
+        validateResults(req, res, next);
+    }
 ]

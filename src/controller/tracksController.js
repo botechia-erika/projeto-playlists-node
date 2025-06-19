@@ -4,6 +4,7 @@ import models from "./../models/index.js";
 export const getItems = async (req, res) => {
   try {
     const { Track } = models;
+    
     if (!Track) {
       return res.status(500).json({ message: "Modelo Track não encontrado." });
     }
