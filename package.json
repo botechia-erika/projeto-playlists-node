@@ -1,0 +1,35 @@
+{
+  "name": "projeto-playlists-node",
+  "version": "1.0.0",
+  "description": "projeto in building process",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/botechia-erika/projeto-playlists-node.git"
+  },
+  "keywords": [],
+  "author": "botechia-erika <24.01905-4@maua.br>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/botechia-erika/projeto-playlists-node/issues"
+  },
+  "homepage": "https://github.com/botechia-erika/projeto-playlists-node#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "mongoose": "^8.16.0",
+    "morgan": "^1.10.0",
+    "multer": "^2.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
