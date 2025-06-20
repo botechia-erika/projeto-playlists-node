@@ -56,3 +56,24 @@ export const validatorCreateItem =[
         validateResults(req, res, next);
     }
 ]
+
+export const validatorGetItem = [
+    check("id")
+        .exists()
+        .withMessage("Id é obrigatório")
+        .notEmpty()
+        .withMessage("Id não pode ser vazio")
+        .isMongoId()
+        .withMessage("Formato de Id inválido"),
+]
+
+
+export const validatorDeleteItem = [
+    check("id")
+        .exists()
+        .withMessage("Id é obrigatório")
+        .notEmpty()
+        .withMessage("Id não pode ser vazio")
+        .isMongoId()
+        .withMessage("Formato de Id inválido"),
+]

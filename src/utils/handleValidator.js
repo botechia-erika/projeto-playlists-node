@@ -8,3 +8,4 @@ export const validateResults = (req, res, next) => {
         return res.send({ errors: error.array() });
     }
 };
+

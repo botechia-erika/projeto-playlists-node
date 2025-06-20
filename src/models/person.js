@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import MongooseDelete from "mongoose-delete";
 const PersonSchema = new mongoose.Schema({
   name: {type: String, required: true},
   age: {type: Number, required: true},
@@ -14,5 +14,6 @@ const PersonSchema = new mongoose.Schema({
     timestamps: true,
     versionKey: false
 });
+PersonSchema.plugin(MongooseDelete, { overrideMethods: 'all',deletedAt: true}); 
 
 export const Person = mongoose.model('persons', PersonSchema);
