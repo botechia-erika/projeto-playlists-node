@@ -1,3 +1,15 @@
 # PROJETO-PLAYLISTS-NODE
 
-projeto in building process
+## Overview:
+
+## Tecnologias, Frameworks e Packages:
+
+## Objetivos:
+
+## Documentação Postman:
+
+## Documentação Swager:
+
+## Deploy do Projeto:
+
+## Projeto-Playlists-Client:

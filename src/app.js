@@ -15,12 +15,10 @@ app.use(express.static('src/storage'));
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+//app.use(express.urlencoded({ extended: true }));
 dbConnect();
 
-/*app.use('/api/tracks', tracksRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/storage', storageRouter);*/
+
 app.use('/', mainRouter);
 
 

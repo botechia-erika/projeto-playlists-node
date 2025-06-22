@@ -1,5 +1,8 @@
+import { matchedData } from "express-validator";
+import { handleHttpError } from "../errors/handleError.js";
 import models from "./../models/index.js";
 import dotenv from "dotenv";
+import fs from "fs";
 dotenv.config();
 const PUBLIC_URL = process.env.BASE_URL || "http://localhost:3003/";
 
@@ -16,11 +19,20 @@ export const getItems = async (req, res) => {
     const data = await Storage.find();
     res.status(200).json({data});
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    handleHttpError(res, "ERROR_GET_ITEMS", error);   
   }
 };
 export const getItem = async(req, res) => {
-   
+   try {
+     const {id}= matchedData(req);
+     const data = await models.Storage.findById(id);
+     if (!data) {
+       return res.status(404).json({ message: "Item not found." });
+     }
+      res.status(200).json({ data });
+   } catch (error) {
+    handleHttpError(res, "ERROR_GET_ITEM", error);
+   }
 }
 
 export const createItem = async(req, res) => {
@@ -46,10 +58,22 @@ export const createItem = async(req, res) => {
 };
 
 
-export const updateItem = async(req, res) => {
-   
-}
+
 
 export const deleteItem = async(req, res) => {
-   
+      try {
+        const id = req.params.id || matchedData(req).id;
+        const data = await models.Storage.findByIdAndDelete(id);
+        if (!data) {
+          return res.status(404).json({ message: "Item not found." });
+        }
+        const { filename } = data;
+        const filePath = `${process.env.STORAGE_PATH}/${filename}`;
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+        }
+        res.status(200).json({ message: "Item deleted successfully." });
+      } catch (error) {
+        handleHttpError(res, "ERROR_DELETE_ITEM", error);
+      }
 }
