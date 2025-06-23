@@ -1,25 +1,15 @@
-import bcrypt from 'bcryptjs';
-export const handlePasswordHash = (passwordPlainText) => {
+import bcrypt from "bcryptjs";
 
-    const saltRounds = 12;
-    
-    return new Promise((resolve, reject) => {
-        bcrypt.hash(passwordPlainText, saltRounds, (err, hash) => {
-        if (err) {
-            return reject(err);
-        }
-        resolve(hash);
-        });
-    });
-}
+// Função para gerar hash da senha
+export const handlePasswordHash = async (passwordPlainText) => {
+  const saltRounds = 12;
+  return await bcrypt.hash(passwordPlainText, saltRounds);
+};
 
-export const handlePasswordCompare = (passwordPlainText, passwordHash) => {
-  return new Promise((resolve, reject) => {
-    bcrypt.compare(passwordPlainText, passwordHash, (err, isMatch) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve(isMatch);
-    });
-  });
+// Função para comparar senha com hash
+export const handlePasswordCompare = async (
+  passwordPlainText,
+  passwordHash
+) => {
+  return await bcrypt.compare(passwordPlainText, passwordHash);
 };
