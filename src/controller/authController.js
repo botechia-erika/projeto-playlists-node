@@ -1,8 +1,9 @@
 import { matchedData } from "express-validator";
 import { v4 as uuidv4 } from "uuid";
 import { handleHttpError } from "../errors/handleError.js";
-import { handlePasswordHash } from "../utils/handlePassword.js";
+import { handlePasswordCompare, handlePasswordHash } from "../utils/handlePassword.js";
 import { db } from "../config/knex.js";
+import { tokenSignIn } from "../utils/handleJWT.js";
 
 export const signUpUser = async (req, res) => {
   try {
@@ -12,7 +13,7 @@ export const signUpUser = async (req, res) => {
       name: req.name,
       email: req.email,
       password_hash: await handlePasswordHash(req.password),
-      age: req.age || null
+      age: 30 // Default age, can be modified later
     };
     if (!data2InsertDBR.name || !data2InsertDBR.email || !data2InsertDBR.password_hash) {
       handleHttpError(res, "ERROR_SIGN_UP_USER", "Missing data");
@@ -39,12 +40,12 @@ export const signUpUser = async (req, res) => {
       return;
     }
 
-    const dataResult = await db.raw(
-      "SELECT id, name, email FROM Users WHERE id = ?",
-      [data2InsertDBR.id]
-    );
 
-    res.json({ data: dataResult[0] || (dataResult.rows && dataResult.rows[0]) });
+    const data = {
+      token: await tokenSignIn({ userObj: data2InsertDBR }),
+      user: data2InsertDBR
+    }
+    res.status(201).json({ data});
 
   } catch (error) {
     console.log(error);
@@ -53,12 +54,46 @@ export const signUpUser = async (req, res) => {
 };
 
 
-export const signInUser = async () => {
+export const signInUser = async (req, res) => {
   try {
+    const { email, password } = matchedData(req);
 
+    // Search user by email
+    const userResult = await db.raw("SELECT * FROM Users WHERE email = ?", [
+      email,
+    ]);
+
+    // Check if user exists
+    if (!userResult || userResult.length === 0) {
+      handleHttpError(res, "ERROR_SIGN_IN_USER", "Invalid credentials");
+      return;
+    }
+
+    const user = userResult[0];
+
+    // Compare password hashes (NÃO faça hash do hash!)
+    const isValidPassword = await handlePasswordCompare(
+      password,
+      user.password_hash
+    );
+    if (!isValidPassword) {
+      handleHttpError(res, "ERROR_SIGN_IN_USER", "Invalid credentials");
+      return;
+    }
+
+    // Generate token and return data
+    const token = await tokenSignIn({ userObj: user });
+    const data = {
+      token,
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      age: user.age,
+    };
+
+    res.json({ data });
   } catch (error) {
-    // You may want to handle errors here if you add logic later
-        console.log(error);
-        handleHttpError(res, "ERROR_SIGN_UP_USER", error);
+    console.error("Error in signIn:", error);
+    handleHttpError(res, "ERROR_SIGN_IN_USER", error.message);
   }
 };

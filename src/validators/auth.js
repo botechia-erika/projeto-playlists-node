@@ -9,13 +9,6 @@ export const validatorSignUpPerson =[
         .withMessage("Nome não pode ser vazio")
         .isLength({ min: 3 , max: 50 })
         .withMessage("Nome deve ter entre 3 e 50 caracteres"),
-    check("age")
-        .exists()
-        .withMessage("Idade é obrigatória")
-        .notEmpty()
-        .withMessage("Idade não pode ser vazia")
-        .isInt({ min: 16, max: 120 })
-        .withMessage("Idade deve ser um número inteiro entre 16 e 120"),
     check("password")
         .exists()
         .withMessage("Senha é obrigatória")
