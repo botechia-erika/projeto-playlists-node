@@ -10,6 +10,6 @@
 
 ## Documentação Swager:
 
-## Deploy do Projeto:
+## Deploy do Projeto NODE API REST:
 
-## Projeto-Playlists-Client:
+## Projeto-Playlists-Client FRONT-END REACT VITE:

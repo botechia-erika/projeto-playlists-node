@@ -82,9 +82,9 @@ export const signInUser = async (req, res) => {
     }
 
     // Generate token and return data
-    const token = await tokenSignIn({ userObj: user });
+    
     const data = {
-      token,
+      token: await tokenSignIn({ userObj: user }),
       id: user.id,
       name: user.name,
       email: user.email,

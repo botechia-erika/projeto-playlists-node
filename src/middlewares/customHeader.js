@@ -1,6 +1,6 @@
 export const customHeader = (req, res, next) => {
     try {
-        const apiKey = req.headers.api_key;
+        const apiKey = req.headers.Authorization || req.headers.authorization;
         if(!apiKey ||apiKey=== ""){
             return res.status(403).send({ message: "API_KEY is required" });
         }
