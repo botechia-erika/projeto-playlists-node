@@ -6,14 +6,18 @@ const JWT_SECRET = process.env.JWT_SECRET_KEY
 
 export const tokenSignIn = async ({userObj})=>{
     try {
+        
         const sign = jwt.sign({
             id:userObj.id,
             accessKey: userObj.age,
+            email: userObj.email,
         }, JWT_SECRET, {
             expiresIn: '2h'
         })
 
         return sign
+
+        
     } catch (error) {
         handleHttpError(error, "ERROR_SIGN_IN_TOKEN", "Error signing in");
     }

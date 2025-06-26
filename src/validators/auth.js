@@ -35,8 +35,8 @@ export const validatorSignInPerson = [
     .withMessage("Senha é obrigatória")
     .notEmpty()
     .withMessage("Senha não pode ser vazia")
-    .isLength({ min: 6, max: 20 })
-    .withMessage("Senha deve ter entre 6 e 20 caracteres"),
+    .isLength({ min: 6, max: 12 })
+    .withMessage("Senha deve ter entre 6 e 12 caracteres"),
   check("email")
     .exists()
     .withMessage("Email é obrigatório")
