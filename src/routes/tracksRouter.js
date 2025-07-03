@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 router.get('/', tracksController.getItems);
-router.post('/' ,customHeader, validatorCreateItem, tracksController.createItem);
+router.post('/' ,validatorCreateItem, tracksController.createItem);
 router.get('/:id', validatorGetItem, tracksController.getItem);
 router.put('/:id',  validatorGetItem , tracksController.updateItem);
 router.delete('/:id',validatorDeleteItem, tracksController.deleteItem);
