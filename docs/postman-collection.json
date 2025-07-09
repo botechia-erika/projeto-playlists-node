@@ -1,0 +1,233 @@
+{
+  "info": {
+    "name": "Projeto Playlists API",
+    "description": "Coleção de endpoints para a API de gerenciamento de playlists musicais",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Tracks",
+      "item": [
+        {
+          "name": "Listar Todas as Músicas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/tracks",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "tracks"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Nova Música",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bohemian Rhapsody\",\n  \"album\": \"A Night at the Opera\",\n  \"cover\": \"https://example.com/cover.jpg\",\n  \"artist\": {\n    \"name\": \"Freddie Mercury\",\n    \"nickname\": \"Queen\",\n    \"nationality\": \"British\"\n  },\n  \"duration\": {\n    \"start\": 0,\n    \"end\": 355\n  },\n  \"mediaId\": \"60d5ecb54b5c3a001f6f4e8a\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/tracks",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "tracks"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Música por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/tracks/{{trackId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "tracks", "{{trackId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Música",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bohemian Rhapsody (Remastered)\",\n  \"album\": \"A Night at the Opera (Remastered)\",\n  \"cover\": \"https://example.com/new-cover.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/tracks/{{trackId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "tracks", "{{trackId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Música",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/tracks/{{trackId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "tracks", "{{trackId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Storage",
+      "item": [
+        {
+          "name": "Listar Todos os Arquivos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/storage",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "storage"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Upload de Arquivo",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "inputFile",
+                  "type": "file",
+                  "src": "/path/to/your/audio.mp3"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/storage",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "storage"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Arquivo por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/storage/{{fileId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "storage", "{{fileId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Arquivo",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/storage/{{fileId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "storage", "{{fileId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Listar Usuários",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Main",
+      "item": [
+        {
+          "name": "Página Principal",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": ["{{baseUrl}}"],
+              "path": [""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Documentação Swagger",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api-docs",
+              "host": ["{{baseUrl}}"],
+              "path": ["api-docs"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Demo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/demo.html",
+              "host": ["{{baseUrl}}"],
+              "path": ["demo.html"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

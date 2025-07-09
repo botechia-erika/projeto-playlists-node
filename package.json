@@ -1,20 +1,42 @@
 {
   "name": "projeto-playlists-node",
   "version": "1.0.0",
-  "description": "projeto in building process",
+  "description": "API RESTful para gerenciamento de playlists musicais",
   "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "echo \"Documentação Swagger disponível em: http://localhost:3000/api-docs\"",
+    "demo": "echo \"Demo disponível em: http://localhost:3000/demo.html\"",
+    "setup": "npm install && echo \"Projeto configurado! Execute 'npm run dev' para iniciar o servidor.\"",
+    "clean": "rm -rf node_modules && rm -rf package-lock.json",
+    "lint": "echo \"Linting não configurado ainda\"",
+    "docker:build": "echo \"Docker não configurado ainda\"",
+    "docker:run": "echo \"Docker não configurado ainda\""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/botechia-erika/projeto-playlists-node.git"
   },
-  "keywords": [],
-  "author": "botechia-erika <24.01905-4@maua.br>",
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "api",
+    "rest",
+    "playlist",
+    "music",
+    "upload",
+    "jwt",
+    "swagger"
+  ],
+  "author": {
+    "name": "Erika Botechia",
+    "email": "elbotechia@gmail.com",
+    "url": "https://github.com/botechia-erika"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/botechia-erika/projeto-playlists-node/issues"
@@ -33,6 +55,8 @@
     "morgan": "^1.10.0",
     "multer": "^2.0.1",
     "sqlite3": "^5.1.7",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

@@ -1,42 +1,752 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROJETO-PLAYLISTS-NODE</title>
-    <link rel="stylesheet" href="stylesheets/globals.css">
+    <title>🎵 Projeto Playlists API - Landing Page</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #6f42c1;
+            --secondary-color: #20c997;
+            --accent-color: #fd7e14;
+            --dark-color: #212529;
+            --light-color: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.1)" points="0,1000 1000,0 1000,1000"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .endpoint-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .stats-section {
+            background: var(--light-color);
+            padding: 80px 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+
+        .cta-section {
+            background: var(--dark-color);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .btn-custom {
+            background: var(--secondary-color);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 40px 0;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header class="header">
-        <h1 id="title">PROJETO-PLAYLISTS-NODE</h1>
-        <p class="subtitle">API RESTful para gerenciamento de TRACKS</p>
-    </header>
-    <main class="main">
-        <section class="section">
-            <div class="sectionHeader">
-            <h2>API IMPORTANT LINKS</h2>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--dark-color);">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="bi bi-music-note-beamed"></i> Playlists API
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Recursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#endpoints">Endpoints</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#docs">Documentação</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-light ms-2" href="/api-docs" target="_blank">
+                            <i class="bi bi-book"></i> API Docs
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <ul class="apiDocsList">
-                <li class="docsListItem">
-                    <a href="">POSTMAN API DOCs</a>
-                </li>
-                <li class="docsListItem">
-                    <a href="">SWAGGER API DOCS</a>
-                </li>
-                <li class="docsListItem">
-                    <a href="">GITHUB REPOSITORY</a>
-                </li>
-                <li class="docsListItem">
-                    <a href="">API REST DEPLOY</a>
-                </li>
-                <li class="docsListItem">
-                    <a href="">VITE REACT CLIENT DEPLOY</a>
-                </li>
-            </ul>
-        </section>
-    </main>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content">
+                    <h1 class="hero-title animate-on-scroll">
+                        🎵 Projeto Playlists API
+                    </h1>
+                    <p class="hero-subtitle animate-on-scroll">
+                        Uma API RESTful completa e moderna para gerenciamento de playlists musicais, 
+                        desenvolvida com Node.js, Express e MongoDB.
+                    </p>
+                    <div class="animate-on-scroll">
+                        <a href="/api-docs" class="btn btn-custom btn-lg me-3" target="_blank">
+                            <i class="bi bi-play-circle"></i> Explorar API
+                        </a>
+                        <a href="https://github.com/botechia-erika/projeto-playlists-node" class="btn btn-outline-light btn-lg" target="_blank">
+                            <i class="bi bi-github"></i> Ver no GitHub
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="animate-on-scroll">
+                        <img src="assets/astrodev.png" alt="API Illustration" class="img-fluid rounded-3 shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold animate-on-scroll">
+                        <i class="bi bi-star-fill text-warning"></i> Principais Recursos
+                    </h2>
+                    <p class="lead text-muted animate-on-scroll">
+                        Descubra o que torna nossa API especial para gerenciamento de músicas
+                    </p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card animate-on-scroll">
+                        <div class="text-center">
+                            <i class="bi bi-music-note-list feature-icon"></i>
+                            <h4 class="fw-bold">Gerenciamento de Músicas</h4>
+                            <p class="text-muted">
+                                CRUD completo para músicas com metadados detalhados como artista, 
+                                álbum, duração e capa.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card animate-on-scroll">
+                        <div class="text-center">
+                            <i class="bi bi-cloud-upload feature-icon"></i>
+                            <h4 class="fw-bold">Upload de Arquivos</h4>
+                            <p class="text-muted">
+                                Sistema robusto de upload para arquivos de áudio com validação 
+                                de tipos e gerenciamento de storage.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card animate-on-scroll">
+                        <div class="text-center">
+                            <i class="bi bi-shield-lock feature-icon"></i>
+                            <h4 class="fw-bold">Segurança JWT</h4>
+                            <p class="text-muted">
+                                Autenticação e autorização com JSON Web Tokens para 
+                                proteger endpoints sensíveis.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card animate-on-scroll">
+                        <div class="text-center">
+                            <i class="bi bi-file-earmark-code feature-icon"></i>
+                            <h4 class="fw-bold">Documentação Swagger</h4>
+                            <p class="text-muted">
+                                Documentação interativa completa com Swagger UI 
+                                para facilitar o desenvolvimento.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card animate-on-scroll">
+                        <div class="text-center">
+                            <i class="bi bi-database feature-icon"></i>
+                            <h4 class="fw-bold">MongoDB & Mongoose</h4>
+                            <p class="text-muted">
+                                Banco de dados NoSQL moderno com ODM para 
+                                modelagem flexível de dados.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card animate-on-scroll">
+                        <div class="text-center">
+                            <i class="bi bi-check-circle feature-icon"></i>
+                            <h4 class="fw-bold">Validação de Dados</h4>
+                            <p class="text-muted">
+                                Validação robusta com express-validator para 
+                                garantir integridade dos dados.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stat-card animate-on-scroll">
+                        <span class="stat-number">15+</span>
+                        <div class="stat-label">Endpoints</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card animate-on-scroll">
+                        <span class="stat-number">3</span>
+                        <div class="stat-label">Recursos Principais</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card animate-on-scroll">
+                        <span class="stat-number">100%</span>
+                        <div class="stat-label">Documentado</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card animate-on-scroll">
+                        <span class="stat-number">API</span>
+                        <div class="stat-label">RESTful</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Endpoints Section -->
+    <section id="endpoints" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold animate-on-scroll">
+                        <i class="bi bi-code-slash text-primary"></i> Endpoints Disponíveis
+                    </h2>
+                    <p class="lead text-muted animate-on-scroll">
+                        Explore todos os endpoints da nossa API RESTful
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Storage Endpoints (Priority) -->
+            <div class="row g-4 mb-5">
+                <div class="col-12">
+                    <div class="feature-card animate-on-scroll">
+                        <div class="row align-items-center">
+                            <div class="col-md-2 text-center">
+                                <i class="bi bi-cloud-upload" style="font-size: 4rem; color: var(--secondary-color);"></i>
+                            </div>
+                            <div class="col-md-10">
+                                <h3 class="fw-bold mb-3" style="color: var(--secondary-color);">
+                                    <i class="bi bi-folder"></i> Storage (Gerenciamento de Arquivos)
+                                </h3>
+                                <p class="text-muted mb-3">
+                                    Upload, download e gerenciamento de arquivos de áudio com validação de tipos e metadados
+                                </p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-2">
+                                            <span class="endpoint-badge" style="background: #28a745;">GET</span> 
+                                            <code>/api/storage</code>
+                                            <small class="text-muted d-block">Listar todos os arquivos</small>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span class="endpoint-badge" style="background: #007bff;">POST</span> 
+                                            <code>/api/storage</code>
+                                            <small class="text-muted d-block">Upload de arquivo de áudio</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-2">
+                                            <span class="endpoint-badge" style="background: #28a745;">GET</span> 
+                                            <code>/api/storage/:id</code>
+                                            <small class="text-muted d-block">Buscar arquivo por ID</small>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span class="endpoint-badge" style="background: #dc3545;">DELETE</span> 
+                                            <code>/api/storage/:id</code>
+                                            <small class="text-muted d-block">Deletar arquivo</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Endpoints -->
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="feature-card animate-on-scroll h-100">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-music-note-beamed" style="font-size: 3rem; color: var(--primary-color);"></i>
+                            <h4 class="fw-bold mt-3" style="color: var(--primary-color);">
+                                Tracks (Músicas)
+                            </h4>
+                            <p class="text-muted">
+                                CRUD completo para gerenciamento de músicas e metadados
+                            </p>
+                        </div>
+                        <div class="endpoint-list">
+                            <div class="mb-2">
+                                <span class="endpoint-badge" style="background: #28a745;">GET</span> 
+                                <code>/api/tracks</code>
+                                <small class="text-muted d-block">Listar todas as músicas</small>
+                            </div>
+                            <div class="mb-2">
+                                <span class="endpoint-badge" style="background: #007bff;">POST</span> 
+                                <code>/api/tracks</code>
+                                <small class="text-muted d-block">Criar nova música</small>
+                            </div>
+                            <div class="mb-2">
+                                <span class="endpoint-badge" style="background: #28a745;">GET</span> 
+                                <code>/api/tracks/:id</code>
+                                <small class="text-muted d-block">Buscar música por ID</small>
+                            </div>
+                            <div class="mb-2">
+                                <span class="endpoint-badge" style="background: #ffc107;">PUT</span> 
+                                <code>/api/tracks/:id</code>
+                                <small class="text-muted d-block">Atualizar música</small>
+                            </div>
+                            <div class="mb-2">
+                                <span class="endpoint-badge" style="background: #dc3545;">DELETE</span> 
+                                <code>/api/tracks/:id</code>
+                                <small class="text-muted d-block">Deletar música</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="feature-card animate-on-scroll h-100">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-people" style="font-size: 3rem; color: var(--accent-color);"></i>
+                            <h4 class="fw-bold mt-3" style="color: var(--accent-color);">
+                                Users (Usuários)
+                            </h4>
+                            <p class="text-muted">
+                                Gerenciamento de usuários e autenticação
+                            </p>
+                        </div>
+                        <div class="endpoint-list">
+                            <div class="mb-2">
+                                <span class="endpoint-badge" style="background: #28a745;">GET</span> 
+                                <code>/api/users</code>
+                                <small class="text-muted d-block">Listar usuários</small>
+                            </div>
+                            <div class="mb-2">
+                                <span class="endpoint-badge" style="background: #007bff;">POST</span> 
+                                <code>/api/auth/register</code>
+                                <small class="text-muted d-block">Registrar novo usuário</small>
+                            </div>
+                            <div class="mb-2">
+                                <span class="endpoint-badge" style="background: #007bff;">POST</span> 
+                                <code>/api/auth/login</code>
+                                <small class="text-muted d-block">Fazer login</small>
+                            </div>
+                            <div class="alert alert-info mt-3 small">
+                                <i class="bi bi-info-circle"></i> 
+                                <strong>Em desenvolvimento:</strong> Mais endpoints de usuário serão adicionados
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies Section -->
+    <section id="tecnologias" class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold animate-on-scroll">
+                        <i class="bi bi-gear text-primary"></i> Tecnologias Utilizadas
+                    </h2>
+                    <p class="lead text-muted animate-on-scroll">
+                        Stack moderno e robusto para máxima performance
+                    </p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="feature-card animate-on-scroll text-center">
+                        <i class="bi bi-server feature-icon text-success"></i>
+                        <h5 class="fw-bold">Node.js</h5>
+                        <p class="text-muted small">Runtime JavaScript para o backend</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-card animate-on-scroll text-center">
+                        <i class="bi bi-lightning feature-icon text-warning"></i>
+                        <h5 class="fw-bold">Express.js</h5>
+                        <p class="text-muted small">Framework web minimalista</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-card animate-on-scroll text-center">
+                        <i class="bi bi-database feature-icon text-info"></i>
+                        <h5 class="fw-bold">MongoDB</h5>
+                        <p class="text-muted small">Banco de dados NoSQL</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature-card animate-on-scroll text-center">
+                        <i class="bi bi-shield-check feature-icon text-danger"></i>
+                        <h5 class="fw-bold">JWT</h5>
+                        <p class="text-muted small">Autenticação segura</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section id="docs" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold animate-on-scroll">
+                        <i class="bi bi-book text-success"></i> Documentação
+                    </h2>
+                    <p class="lead text-muted animate-on-scroll">
+                        Recursos essenciais para desenvolvedores que usam nossa API
+                    </p>
+                </div>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-5">
+                    <div class="feature-card animate-on-scroll">
+                        <div class="text-center">
+                            <i class="bi bi-file-earmark-text feature-icon text-primary"></i>
+                            <h4 class="fw-bold">Swagger UI</h4>
+                            <p class="text-muted">
+                                Documentação interativa completa com exemplos e possibilidade de testar endpoints diretamente no navegador.
+                            </p>
+                            <a href="/api-docs" class="btn btn-outline-primary btn-lg" target="_blank">
+                                <i class="bi bi-box-arrow-up-right"></i> Abrir Swagger
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="feature-card animate-on-scroll">
+                        <div class="text-center">
+                            <i class="bi bi-collection feature-icon text-warning"></i>
+                            <h4 class="fw-bold">Collection Postman</h4>
+                            <p class="text-muted">
+                                Collection completa para importar no Postman e testar todos os endpoints com exemplos pré-configurados.
+                            </p>
+                            <a href="/postman-collection.json" class="btn btn-outline-warning btn-lg" target="_blank">
+                                <i class="bi bi-download"></i> Baixar Collection
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="display-4 fw-bold mb-4 animate-on-scroll">
+                        Pronto para começar?
+                    </h2>
+                    <p class="lead mb-4 animate-on-scroll">
+                        Explore nossa API completa e comece a construir aplicações incríveis para gerenciamento de músicas!
+                    </p>
+                    <div class="animate-on-scroll">
+                        <a href="/api-docs" class="btn btn-custom btn-lg me-3" target="_blank">
+                            <i class="bi bi-rocket"></i> Começar Agora
+                        </a>
+                        <a href="https://github.com/botechia-erika/projeto-playlists-node" class="btn btn-outline-light btn-lg" target="_blank">
+                            <i class="bi bi-github"></i> Ver no GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
-        <p>Made with ❤️ by <a href="https://github.com/botechia-erika">Botechia-Erika</a></p>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">
+                        <i class="bi bi-music-note-beamed text-primary"></i> Projeto Playlists API
+                    </h5>
+                    <p class="text-muted">
+                        Uma API moderna e completa para gerenciamento de playlists musicais,
+                        desenvolvida com as melhores práticas de desenvolvimento web.
+                    </p>
+                    <div class="d-flex gap-3 mt-3">
+                        <a href="https://github.com/botechia-erika/projeto-playlists-node" class="text-muted fs-4" target="_blank">
+                            <i class="bi bi-github"></i>
+                        </a>
+                        <a href="mailto:elbotechia@gmail.com" class="text-muted fs-4">
+                            <i class="bi bi-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="fw-bold mb-3">Documentação</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="/api-docs" class="text-muted text-decoration-none">
+                                <i class="bi bi-book"></i> API Docs
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="https://github.com/botechia-erika/projeto-playlists-node#readme" class="text-muted text-decoration-none" target="_blank">
+                                <i class="bi bi-file-text"></i> README
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="fw-bold mb-3">Recursos</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="#endpoints" class="text-muted text-decoration-none">
+                                <i class="bi bi-api"></i> Endpoints
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#tecnologias" class="text-muted text-decoration-none">
+                                <i class="bi bi-gear"></i> Tecnologias
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h6 class="fw-bold mb-3">Informações do Projeto</h6>
+                    <div class="small text-muted">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span><i class="bi bi-tag"></i> Versão:</span>
+                            <span class="fw-bold">1.0.0</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span><i class="bi bi-shield-check"></i> Licença:</span>
+                            <span class="fw-bold">MIT</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span><i class="bi bi-code-square"></i> Linguagem:</span>
+                            <span class="fw-bold">JavaScript/Node.js</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span><i class="bi bi-database"></i> Banco de Dados:</span>
+                            <span class="fw-bold">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <p class="text-muted mb-0">
+                        &copy; 2025 Projeto Playlists API. Desenvolvido com ❤️ por 
+                        <a href="https://github.com/botechia-erika" class="text-decoration-none fw-bold">Erika Botechia</a>
+                    </p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <small class="text-muted">
+                        <i class="bi bi-calendar"></i> Última atualização: Janeiro 2025
+                    </small>
+                </div>
+            </div>
+        </div>
     </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add some interactive effects
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
 </body>
 </html>
