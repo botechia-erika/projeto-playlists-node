@@ -10,7 +10,7 @@ const router = express.Router();
 // single para 1 upload, multi para varios uploads
 router.post(
   '/',
-  customHeader, uploadMiddleware.single('inputFile'),
+ uploadMiddleware.single('inputFile'),
   (req, res, next) => {
 	if (!storageController.createItem) {
 	  return res.status(500).json({ error: 'createItem controller not found' });
